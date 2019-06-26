@@ -10,7 +10,7 @@ const mutant = require('./routes/dnaRoute');
 const check = require('./functions/checkIsMutant');
 
 // settings
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 8080)
 
 // middlewares
 app.use(morgan('dev'));

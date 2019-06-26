@@ -72,6 +72,12 @@ module.exports = app => {
             res.status(200).json(data);
         }   
     });
+    
   });
+  
+    app.get('/test', (req, res) => {
+    
+        res.status(200).json({"test":"done"});
+    });
   
 };
