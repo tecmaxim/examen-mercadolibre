@@ -7,3 +7,4 @@ manual_scaling:
 
 beta_settings:
   cloud_sql_instances: examen-ml-api:southamerica-east1:mldatabase
+
