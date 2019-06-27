@@ -1,12 +1,5 @@
-const mysql = require('mysql');
+const connection = require('../db.js');
 
-connection = mysql.createConnection({
-  //host: 'localhost',
-  user: 'api-user',
-  password: '1qaz2wsx',
-  database: 'api-test',
-  socketPath: '/cloudsql/examen-ml-api:southamerica-east1:mldatabase' 
-});
 
 let dnaModel = {};
 
@@ -25,12 +18,12 @@ dnaModel.getDnas = (callback) => {
   }
 };
 
-dnaModel.insertDna = (  dnaData, callback) => {
+dnaModel.insertDna = (  dnaData, callback) => {	
   if (connection) {
-    connection.query('INSERT INTO dna SET ?', dnaData,
-      (err, result) => {
+    connection.query('INSERT INTO dna VALUES (?,?,?)', dnaData,
+      (err, result, fields) => {
         if (err) {
-          throw err;
+          callback(nerrull, null)
         } else {
           callback(null, {'insertId': result.insertId})
         }
