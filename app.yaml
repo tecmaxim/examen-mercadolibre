@@ -1,0 +1,9 @@
+#[START app_yaml]
+runtime: nodejs
+env: flex
+
+manual_scaling:
+  instances: 1
+
+beta_settings:
+  cloud_sql_instances: examen-ml-api:southamerica-east1:mldatabase
