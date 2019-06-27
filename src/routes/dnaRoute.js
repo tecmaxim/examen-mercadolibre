@@ -13,14 +13,16 @@ module.exports = app => {
   });
 
   app.post('/mutant', (req, res) => {
+	  console.log('req:'+req.body.dna);
       
     let checkMutant = false;
     let status = 200;
     let varMsg = '';
-    
-    if(req.body.dna != undefined && req.body.dna.length === req.body.dna[0].length)
+	let dnaJson = req;
+    ;
+    if(dnaJson.body.dna != undefined && dnaJson.body.dna.length === dnaJson.body.dna[0].length)
     {
-        dnasearch.checkIsMutante(req.body, (err, data) =>{
+        dnasearch.checkIsMutante(dnaJson.body, (err, data) =>{
             if(data > 1)
             {    
                varMsg = 'Hewstone, tenemos un mutante!';
@@ -32,25 +34,18 @@ module.exports = app => {
                 status = 403
             }
             
-            let dnaData = {
-              id: null,
-              chain: req.body.dna.toString(),
-              isMutant: checkMutant,
-
-            };
             
             //guardamos el registro despues de comparar
-            dnaModel.insertDna(dnaData, (errInsert, data) => {
-              if (data && data.insertId) {
-                res.status(status).json({
+            dnaModel.insertDna([null, dnaJson.body.dna.toString(),checkMutant ], (errInsert, data) => {
+              if (!errInsert) {
+                res.status(status).send({
                   success: true,
                   msg: varMsg,
-                });
+                });				
               } else {
-                res.status(status).json({
+                 res.status(500).json({
                   success: false,
-				  err: errInsert,
-                  msg: varMsg
+				  err: errInsert,                  
                 });
               }
             });

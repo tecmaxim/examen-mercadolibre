@@ -4,18 +4,21 @@ const G = 'GGGG';
 const T = 'TTTT';
 
 var vueltas = 0;
-var mutantDna = 0;
+var mutantDna;
 var countMatches = 0;
 
 let dnasearch = {};
     
  dnasearch.checkIsMutante = (dnaJson, callback) =>{
 
+	mutantDna = 0;
+	console.log('inmit mutanDna:'+mutantDna);
+	
     //busqueda Horizontal
     for(let dnaChain of dnaJson.dna){
         if(dnaChain.includes(A) || dnaChain.includes(C) || dnaChain.includes(G) || dnaChain.includes(T)){
             if(++mutantDna > 1){ 
-                return   mutantDna;
+                return callback(null, mutantDna);
 			}
         }
     }
@@ -30,17 +33,19 @@ let dnasearch = {};
         let dnaString = dnaChain.join("");
         if(dnaString.includes(A) || dnaString.includes(C) || dnaString.includes(G) || dnaString.includes(T)){
             if(++mutantDna > 1){
-			   return   mutantDna;
+				console.log(mutantDna);
+				return callback(null, mutantDna);
             }
         }
     }
 
-    var return1 = busquedaOblicua(0,0, dnaJson);
-
-    callback(null, mutantDna);
+    var mutantFounds = busquedaOblicua(0,0, dnaJson);
+	console.log('final mutanDna:'+mutantDna);
+    return callback(null, mutantDna);
 
 }
 
+//Esta función mapea la matriz y la da vuelta
 function transpose(a) {
     return Object.keys(a[0]).map(function(c) {
         return a.map(function(r) { return r[c]; });
@@ -64,13 +69,13 @@ function busquedaOblicua(itRow, itColumn, dnaJson){
                         //Aqui ya será el 4to match, 
                         
                         if(++mutantDna > 1){
-                            return   mutantDna;
+							countMatches = 0;
+							busquedaOblicua(itRow = 0, ++vueltas, dnaJson);
             
                         }
                         //reiniciamos el contador de coincidencias y hacemos la 
                         //llamada recursiva, para la siguiente escalera
-                        countMatches = 0;
-                        busquedaOblicua(itRow = 0, ++vueltas, dnaJson);
+
                     }else{
                         console.log('match < 3');
                         // si no, incrementamos el contador
@@ -94,7 +99,9 @@ function busquedaOblicua(itRow, itColumn, dnaJson){
             }
             //vueltas++;
             console.log('back recursivity');
+			vueltas = 0;
             return -1;
+			
         }
         
     }
