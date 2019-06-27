@@ -49,7 +49,6 @@ function transpose(a) {
 
 function busquedaOblicua(itRow, itColumn, dnaJson){
     //Para el control principal, que va por columnas, debe buscar empezando por la columna
-    console.log('row:'+itRow+' - column:'+itColumn);
     
     if(vueltas < dnaJson.dna[0].length && vueltas <= (dnaJson.dna[0].length - 4)  ){        
         //En el caso de las filas, si a�n no hay coincidencias y quedan 
@@ -60,8 +59,6 @@ function busquedaOblicua(itRow, itColumn, dnaJson){
                     
                     countMatches++;
                     if(countMatches === 3){
-                        console.log('match 4!!');
-                        //Aqui ya será el 4to match, 
                         
                         if(++mutantDna > 1){
                             return   mutantDna;
@@ -72,28 +69,23 @@ function busquedaOblicua(itRow, itColumn, dnaJson){
                         countMatches = 0;
                         busquedaOblicua(itRow = 0, ++vueltas, dnaJson);
                     }else{
-                        console.log('match < 3');
-                        // si no, incrementamos el contador
                         
-                        console.log('matches: '+countMatches);
                         busquedaOblicua(++itRow, ++itColumn, dnaJson);
                     }
                     
                 }else if(dnaJson.dna[0].length ){
-                    console.log('no match');
+                    
                    busquedaOblicua(++itRow,++itColumn, dnaJson);
                 }   
                 
             }else
             {
-				console.log('se acabo el indice');
 				countMatches = 0;
                 if(vueltas < dnaJson.dna[0].length)
                     busquedaOblicua(itRow = 0,++vueltas, dnaJson);
 				
             }
-            //vueltas++;
-            console.log('back recursivity');
+            
             return -1;
         }
         

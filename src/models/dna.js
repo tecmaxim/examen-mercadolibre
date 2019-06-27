@@ -1,11 +1,11 @@
 const mysql = require('mysql');
 
 connection = mysql.createConnection({
-  host: 'localhost',
+  //host: 'localhost',
   user: 'api-user',
   password: '1qaz2wsx',
   database: 'api-test',
-  //socketPath: '/cloudsql/examen-ml-api:southamerica-east1:mldatabase' 
+  socketPath: '/cloudsql/examen-ml-api:southamerica-east1:mldatabase' 
 });
 
 let dnaModel = {};
